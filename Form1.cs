@@ -1,19 +1,72 @@
 using _1115_HWINFO.Core.Model;
+using _1115_HWINFO.Core.Provider;
+using System;
 using System.Text;
+using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace _1115_HWINFO
 {
     public partial class Form1 : Form
     {
         private HWInfoProvider _hwInfoProvider;
+        private SensorProvider _sensorProvider;
+        private Timer _sensorTimer;
 
         public Form1()
         {
             InitializeComponent();
 
             _hwInfoProvider = new HWInfoProvider();
+            _sensorProvider = new SensorProvider();
 
             LoadHardWareInfo();
+            InitializeSensorListView();
+            InitializeSensorTimer();
+        }
+
+        private void InitializeSensorListView()
+        {
+            sensorListView.Columns.Clear();
+            sensorListView.Columns.Add("Hardware" , 200);
+            sensorListView.Columns.Add("Name" , 200);
+            sensorListView.Columns.Add("Type" , 100);
+            sensorListView.Columns.Add("Value" , 100);
+        }
+
+        private void InitializeSensorTimer()
+        {
+            _sensorTimer = new Timer();
+            _sensorTimer.Interval = 1000; // 1초마다 갱신
+            _sensorTimer.Tick += OnSensorTimerTick;
+            _sensorTimer.Start();
+        }
+
+        private void OnSensorTimerTick(object sender , EventArgs e)
+        {
+            List<SensorValue_model> tValues = _sensorProvider.GetCurrentSensorValues();
+
+            sensorListView.BeginUpdate();
+            sensorListView.Items.Clear();
+
+            foreach ( var tSensor in tValues )
+            {
+                string tValueText = tSensor.Value.HasValue
+                    ? $"{tSensor.Value.Value:F1} {tSensor.Unit}"
+                    : "-";
+
+                var tItem = new ListViewItem(new[]
+                {
+                    tSensor.Hardware,
+                    tSensor.Name,
+                    tSensor.Type,
+                    tValueText
+                });
+
+                sensorListView.Items.Add(tItem);
+            }
+
+            sensorListView.EndUpdate();
         }
 
         private void LoadHardWareInfo()

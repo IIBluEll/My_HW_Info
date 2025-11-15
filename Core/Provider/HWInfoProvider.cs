@@ -1,6 +1,7 @@
-﻿using System.Management;
+﻿using _1115_HWINFO.Core.Model;
+using System.Management;
 
-namespace _1115_HWINFO.Core.Model
+namespace _1115_HWINFO.Core.Provider
 {
     public class HWInfoProvider
     {

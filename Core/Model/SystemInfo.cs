@@ -32,4 +32,13 @@
         public string Model { get; set; }
         public long GBSize { get; set; }
     }
+
+    public class SensorValue_model
+    {
+        public string Name { get; set; }       
+        public string Hardware { get; set; }   
+        public string Type { get; set; }       
+        public float? Value { get; set; }      
+        public string Unit { get; set; }      
+    }
 }
