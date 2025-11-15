@@ -1,0 +1,142 @@
+########################
+# OS 공통
+########################
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+
+########################
+# Visual Studio / IDE
+########################
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# Rider / 기타 IDE
+.idea/
+*.sln.iml
+
+########################
+# 빌드 결과물
+########################
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in[0-9]*/
+[Oo]bj[0-9]*/
+
+# ASP.NET (혹시 섞여 있을 경우)
+App_Data/
+App_Web_*
+App_Code/
+App_GlobalResources/
+App_LocalResources/
+App_Browsers/
+App_Themes/
+
+########################
+# NuGet / 패키지
+########################
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+# NuGet 관련
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+########################
+# 로그 / 분석
+########################
+*.log
+*.tlog
+TestResult*/
+TestResults/
+*.coverage
+*.coveragexml
+
+########################
+# 데이터베이스 / 캐시
+########################
+*.mdf
+*.ldf
+*.ndf
+*.db
+*.db-wal
+*.db-journal
+
+########################
+# 설정/환경 관련
+########################
+# 사용자별 환경 설정 (개인 PC 의존)
+*.userprefs
+*.pubxml
+*.pubxml.user
+
+# Resharper / 분석 도구
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+########################
+# Publish / 배포 산출물
+########################
+[Pp]ublish/
+*.exe
+*.dll
+*.pdb
+*.mdb
+
+# ClickOnce
+publish/
+*.application
+*.appx
+*.appxupload
+*.appxbundle
+
+########################
+# 기타
+########################
+# 백업 파일
+*~
+*.bak
+*.orig
+
+# 잠금 파일
+*.lock
+
+# 임시 파일
+*.tmp
+*.temp
+
+########################
+# 필요 시 추가 예시
+########################
+# .editorconfig를 커밋하고 싶다면 주석 처리하지 마세요.
+# .editorconfig
+
+# Git에서 추적하지 않을 WinForms 전용 설정 파일이 있다면 아래에 개별적으로 추가
+# 예: appSettings.Local.config
+# appSettings.Local.config
