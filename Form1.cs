@@ -13,6 +13,9 @@ namespace _1115_HWINFO
         private SensorProvider _sensorProvider;
         private Timer _sensorTimer;
 
+        private Dictionary<string , ListViewItem> _dic_sensorItems = new Dictionary<string , ListViewItem>();
+
+
         public Form1()
         {
             InitializeComponent();
@@ -32,6 +35,9 @@ namespace _1115_HWINFO
             sensorListView.Columns.Add("Name" , 200);
             sensorListView.Columns.Add("Type" , 100);
             sensorListView.Columns.Add("Value" , 100);
+
+            sensorListView.View = View.Details;
+            sensorListView.FullRowSelect = true;
         }
 
         private void InitializeSensorTimer()
@@ -44,26 +50,59 @@ namespace _1115_HWINFO
 
         private void OnSensorTimerTick(object sender , EventArgs e)
         {
-            List<SensorValue_model> tValues = _sensorProvider.GetCurrentSensorValues();
+            var tValues = _sensorProvider.GetCurrentSensorValues();
 
             sensorListView.BeginUpdate();
-            sensorListView.Items.Clear();
+
+            // 이번 틱에 살아있는 센서 키를 추적해서, 없는 애는 나중에 삭제
+            var tAliveKeys = new HashSet<string>();
 
             foreach ( var tSensor in tValues )
             {
-                string tValueText = tSensor.Value.HasValue
-                    ? $"{tSensor.Value.Value:F1} {tSensor.Unit}"
-                    : "-";
+                // 센서를 구분할 수 있는 고유 키 (필요시 구성 바꾸면 됨)
+                string tKey = $"{tSensor.Hardware}|{tSensor.Name}|{tSensor.Type}";
+                tAliveKeys.Add(tKey);
 
-                var tItem = new ListViewItem(new[]
+                string tValueText = tSensor.Value.HasValue
+                ? $"{tSensor.Value.Value:F1} {tSensor.Unit}"
+                : "-";
+
+                if ( _dic_sensorItems.TryGetValue(tKey , out var tItem) == false )
                 {
+                    // 처음 등장하는 센서는 새로 추가
+                    tItem = new ListViewItem(new[]
+                    {
                     tSensor.Hardware,
                     tSensor.Name,
                     tSensor.Type,
                     tValueText
                 });
 
-                sensorListView.Items.Add(tItem);
+                    _dic_sensorItems[ tKey ] = tItem;
+                    sensorListView.Items.Add(tItem);
+                }
+                else
+                {
+                    // 이미 있는 센서는 값만 갱신
+                    tItem.SubItems[ 3 ].Text = tValueText;
+                }
+            }
+
+            // 이번 틱에 존재하지 않는 센서는 리스트에서 제거 (선택 사항)
+            var tRemoveKeys = new List<string>();
+            foreach ( var tPair in _dic_sensorItems )
+            {
+                if ( tAliveKeys.Contains(tPair.Key) == false )
+                {
+                    tRemoveKeys.Add(tPair.Key);
+                }
+            }
+
+            foreach ( var tKey in tRemoveKeys )
+            {
+                var tItem = _dic_sensorItems[tKey];
+                sensorListView.Items.Remove(tItem);
+                _dic_sensorItems.Remove(tKey);
             }
 
             sensorListView.EndUpdate();
