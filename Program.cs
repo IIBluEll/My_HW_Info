@@ -1,6 +1,6 @@
-using System.Management;
+using MyHwInfo.StartProgram;
 
-namespace _1115_HWINFO
+namespace MyHwInfo
 {
     internal static class Program
     {
@@ -10,12 +10,13 @@ namespace _1115_HWINFO
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
+            var tStartupView = new StartupForm_view();
+            var tStartupPresenter = new Startup_presenter(tStartupView);
+
+            Application.Run(tStartupView);
         }
-
     }
 }
