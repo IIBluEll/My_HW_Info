@@ -1,8 +1,10 @@
-﻿namespace MyHwInfo.CodeBase.Interface
+﻿using MyHwInfo.HWMonitor;
+
+namespace MyHwInfo.CodeBase.Interface
 {
     public interface IHardwareInfoView
     {
-        void RenderCpuInfo(string cpuName , int coreCount , int threadCount);
-        void RenderGpuInfo(string gpuName , string vramInfo);
+        void RenderCPU(HardwareMonitor_model cpuInfo);
+        void RenderGPU(IReadOnlyList<HardwareMonitor_model> gpuInfos);
     }
 }

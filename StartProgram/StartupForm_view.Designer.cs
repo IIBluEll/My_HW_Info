@@ -77,7 +77,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F , 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(170 , 135);
+            ClientSize = new Size(228 , 154);
             Controls.Add(startBtn);
             Controls.Add(eventLogCheckBox);
             Controls.Add(hardwareInfoCheckBox);

@@ -1,5 +1,6 @@
 ﻿using MyHwInfo.CodeBase.Interface;
-using MyHwInfo.HWInfo;
+using MyHwInfo.CodeBase.Provider;
+using MyHwInfo.HWMonitor;
 using System.Windows.Forms;
 
 namespace MyHwInfo.StartProgram
@@ -27,24 +28,23 @@ namespace MyHwInfo.StartProgram
                 return;
             }
 
-            //if ( _view.IsHardwareMonitorChecked )
-            //{
-            //    var tHardwareMonitorView = new HardwareMonitorForm_view();
-            //    var tHardwareMonitorPresenter = new HardwareMonitorPresenter_presenter(tHardwareMonitorView);
-            //            _openedFormCount++;
-            //    tHardwareMonitorView.Show();
-            //}
-
-            if ( _view.IsHardwareInfoChecked )
+            if ( _view.IsHardwareMonitorChecked )
             {
-                var tHardwareInfoView = new HardwareInfo_view();
-                var tHardwareInfoPresenter = new HardwareInfo_presenter (tHardwareInfoView);
+                var tHardwareInfoView = new HardwareMonitor_view();
+                var tProvider = new HardwareMonitorProvider();
+
+                var tHardwareInfoPresenter = new HardwareMonitor_presenter (tHardwareInfoView,tProvider);
 
                 tHardwareInfoView.FormClosed += OnChildFormClosed;
 
                 _openedFormCount++;
                 tHardwareInfoView.Show();
             }
+
+            //if ( _view.IsHardwareInfoChecked )
+            //{
+            //    return;
+            //}
 
             //if ( _view.IsEventLogChecked )
             //{
